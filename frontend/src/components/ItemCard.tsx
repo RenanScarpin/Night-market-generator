@@ -62,7 +62,7 @@ export function ItemCard({ slot }: Props) {
         {item.prices[0] && <PriceBadge price={item.prices[0]} />}
       </div>
 
-      <p className="item-info">{item.info}</p>
+      {item.info && <p className="item-info">{item.info}</p>}
 
       <div className="raw-origin">
         <span>Rolled from</span>

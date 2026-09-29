@@ -28,13 +28,13 @@ class ApiTests(unittest.TestCase):
         data = response.json()
         self.assertEqual(data["status"], "ok")
         self.assertTrue(data["database_ok"])
-        self.assertEqual(data["item_count"], 1150)
+        self.assertEqual(data["item_count"], 1149)
 
     def test_meta_contract(self):
         response = self.client.get("/api/meta")
         self.assertEqual(response.status_code, 200)
         data = response.json()
-        self.assertEqual(data["item_count"], 1150)
+        self.assertEqual(data["item_count"], 1149)
         self.assertIn("core_raw", data["supported_modes"])
         self.assertIn("expanded_2045", data["supported_modes"])
         self.assertEqual(set(data["supported_gm_choice"]), {"random", "leave"})

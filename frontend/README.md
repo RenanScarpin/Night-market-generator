@@ -28,7 +28,7 @@ The GUI now includes both the session-ready generator and the first complete Cat
 - `Regenerate`, `New random`, and `Copy link` actions.
 - Last-used generation mode and GM-choice behavior persisted in `localStorage`.
 
-- A `/catalogue` route for browsing the complete 1,150-item canon-2045 database.
+- A `/catalogue` route for browsing the complete 1,149-item canon-2045 database.
 - Catalogue search by canonical name or known alias.
 - Filters for source/index category, market semantic tag, explicit manufacturer, and eurobuck price range.
 - Filter state encoded in the URL so searches can be bookmarked or shared.

@@ -153,7 +153,7 @@ export function CataloguePage({ locationSearch }: Props) {
         <span className="eyebrow">CANON 2045 DATABASE</span>
         <h1>Street Catalogue</h1>
         <p>
-          Browse all 1,150 canonical records behind the Night Market generator. Search by name,
+          Browse the canon-2045 records behind the Night Market generator. Search by name,
           source taxonomy, generator semantics, manufacturer, or actual eurobuck price.
         </p>
       </header>

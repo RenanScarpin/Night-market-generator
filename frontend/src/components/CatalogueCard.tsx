@@ -40,7 +40,7 @@ export function CatalogueCard({ item }: Props) {
         {price && <PriceBadge price={price} />}
       </div>
 
-      <p className="catalogue-info">{item.info}</p>
+      {item.info && <p className="catalogue-info">{item.info}</p>}
 
       <div className="catalogue-taxonomy">
         {primaryCategory && <span>{primaryCategory.name}</span>}

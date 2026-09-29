@@ -289,7 +289,7 @@ to reuse later in a React Native / Expo client.
 ### Catalogue web page
 
 The React client now includes `/catalogue`, a searchable browser for the full
-1,150-item canon-2045 database. It supports name/alias search, category and
+1,149-item canon-2045 database. It supports name/alias search, category and
 market-tag filters, explicit manufacturer filtering, min/max eurobuck price,
 URL-backed filter state, pagination, and expandable full item mechanics.
 
@@ -303,4 +303,7 @@ Examples of bookmarkable catalogue URLs:
 
 The manufacturer select is backed by `GET /api/manufacturers`; category and
 tag options come from the existing catalogue metadata endpoints.
+## Manual database editing
+
+For hand-tuning item descriptions or mechanics, see `MANUAL_DATABASE_EDITING.md`. The project also includes `scripts/db_item_admin.py`, which can show an item, safely replace its description or mechanics JSON with automatic backups, and validate database integrity afterward.
 
