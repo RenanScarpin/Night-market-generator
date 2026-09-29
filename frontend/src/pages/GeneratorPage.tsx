@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import { ApiError, generateMarket, getMarket } from '../api/client'
 import { MarketActions } from '../components/MarketActions'
 import { MarketControls } from '../components/MarketControls'
+import { ExportActions } from '../components/ExportActions'
 import { MarketSection } from '../components/MarketSection'
 import { ModeBadge } from '../components/ModeBadge'
 import { RecentMarkets } from '../components/RecentMarkets'
@@ -277,6 +278,7 @@ export function GeneratorPage({ locationSearch }: Props) {
                 <ModeBadge mode={market.mode} />
                 <span className="version-chip">GEN {market.generator_version}</span>
               </div>
+              <ExportActions market={market} />
               <MarketActions
                 loading={loading}
                 copied={copied}

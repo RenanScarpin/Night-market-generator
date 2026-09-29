@@ -584,3 +584,25 @@ a { color: inherit; }
   .catalogue-pagination { justify-content: space-between; gap: 7px; }
   .catalogue-pagination button { min-width: auto; }
 }
+
+
+.export-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .5rem;
+  margin-bottom: .75rem;
+}
+
+@media print {
+  .site-header,
+  .site-footer,
+  .market-controls,
+  .market-actions,
+  .export-actions,
+  .recent-markets {
+    display: none !important;
+  }
+  body {
+    background: white;
+  }
+}
