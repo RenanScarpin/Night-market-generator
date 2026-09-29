@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { ApiError, getItemDetail } from '../api/client'
 import type { ItemDetail } from '../types/api'
-import { compactSource, titleCase } from '../utils/format'
+import { titleCase } from '../utils/format'
 import { MechanicsView } from './MechanicsView'
 import { PriceBadge } from './PriceBadge'
 
@@ -40,7 +40,6 @@ export function ItemDetails({ itemId }: Props) {
   if (error) return <div className="detail-state error-text">{error}</div>
   if (!detail) return null
 
-  const primarySources = detail.sources.filter((source) => source.source_role === 'primary')
   const relationships = detail.relationships
 
   return (
@@ -87,17 +86,6 @@ export function ItemDetails({ itemId }: Props) {
         <div>
           <h4>Categories</h4>
           <p>{detail.categories.map((category) => category.name).join(' · ') || '—'}</p>
-        </div>
-        <div>
-          <h4>Source</h4>
-          <p>
-            {primarySources.length
-              ? primarySources
-                  .map((source) => compactSource(source.code, source.printed_page))
-                  .filter(Boolean)
-                  .join(' · ')
-              : '—'}
-          </p>
         </div>
       </div>
     </div>
