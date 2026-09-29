@@ -1,5 +1,9 @@
 import { titleCase } from '../utils/format'
 
+// Extraction provenance is kept in the database but hidden from the player-facing mechanics view.
+// The compact citation is rendered separately by ItemDetails.
+const HIDDEN_MECHANICS_SECTIONS = new Set(['source'])
+
 interface Props {
   value: unknown
   depth?: number
@@ -34,6 +38,7 @@ export function MechanicsView({ value, depth = 0 }: Props) {
 
   if (typeof value === 'object' && value !== null) {
     const entries = Object.entries(value as Record<string, unknown>)
+      .filter(([key]) => !HIDDEN_MECHANICS_SECTIONS.has(key.toLowerCase()))
     if (!entries.length) return <span className="muted">No structured mechanics.</span>
 
     return (
