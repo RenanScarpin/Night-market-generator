@@ -4,7 +4,7 @@ import os
 from pathlib import Path
 from typing import Literal, Optional
 
-from fastapi import FastAPI, HTTPException, Query
+from fastapi import FastAPI, HTTPException, Path as ApiPath, Query
 from fastapi.middleware.cors import CORSMiddleware
 
 from nightmarket.generator import GENERATOR_VERSION, NightMarketGenerator
@@ -142,7 +142,7 @@ def create_app(db_path: str | Path | None = None) -> FastAPI:
         ),
     )
     def regenerate_market(
-        seed: int,
+        seed: int = ApiPath(ge=0, le=9_007_199_254_740_991),
         mode: Literal["core_raw", "expanded_2045"] = "expanded_2045",
         gm_choice: Literal["random", "leave"] = "random",
     ) -> dict:

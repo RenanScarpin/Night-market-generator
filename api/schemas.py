@@ -11,7 +11,7 @@ class StrictModel(BaseModel):
 
 class MarketGenerateRequest(StrictModel):
     mode: Literal["core_raw", "expanded_2045"] = "expanded_2045"
-    seed: Optional[int] = None
+    seed: Optional[int] = Field(default=None, ge=0, le=9_007_199_254_740_991)
     gm_choice: Literal["random", "leave"] = "random"
 
 

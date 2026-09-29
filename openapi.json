@@ -104,6 +104,8 @@
             "required": true,
             "schema": {
               "type": "integer",
+              "maximum": 9007199254740991,
+              "minimum": 0,
               "title": "Seed"
             }
           },
@@ -1017,7 +1019,9 @@
           "seed": {
             "anyOf": [
               {
-                "type": "integer"
+                "type": "integer",
+                "maximum": 9007199254740991.0,
+                "minimum": 0.0
               },
               {
                 "type": "null"

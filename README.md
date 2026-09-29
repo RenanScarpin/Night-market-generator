@@ -233,3 +233,37 @@ python -m pip install -r requirements-dev.txt
 python -m unittest discover -s tests -v
 ```
 
+
+## React web GUI
+
+The first usable web GUI is in `frontend/`.
+
+It currently provides:
+
+- Core RAW and Expanded 2045 generation modes.
+- Optional deterministic seed input.
+- Random or unresolved handling of GM-choice slots.
+- Responsive Night Market cards for desktop, tablet, and mobile browsers.
+- A clear visual distinction between RAW table results and expanded catalogue resolutions.
+- Supplemental foundational cyberware displayed under the option that caused it to become available.
+- Expandable mechanics, relationships, categories, prices, and source information loaded from the FastAPI item endpoint.
+
+Run the backend from the project root:
+
+```bash
+python -m uvicorn api.app:app --reload
+```
+
+Then run the frontend in a second terminal:
+
+```bash
+cd frontend
+npm install
+npm run dev
+```
+
+Open `http://127.0.0.1:5173`.
+
+The Vite development server proxies `/api` to FastAPI on port 8000. If the API is hosted somewhere else, copy `frontend/.env.example` to `frontend/.env` and set `VITE_API_BASE_URL`.
+
+The frontend is deliberately split into API, types, components, pages, and utility layers so these pieces can later be extracted into shared packages for a React Native / Expo mobile client.

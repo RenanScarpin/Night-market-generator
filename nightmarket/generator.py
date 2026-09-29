@@ -49,7 +49,7 @@ class NightMarketGenerator:
             raise ValueError("gm_choice_behavior='prompt' requires gm_chooser")
 
         if seed is None:
-            seed = secrets.randbits(63)
+            seed = secrets.randbelow(2**53)
         rng = random.Random(seed)
 
         # RAW: roll 1d6 twice; reroll second/duplicates until different.

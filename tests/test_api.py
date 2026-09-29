@@ -52,6 +52,17 @@ class ApiTests(unittest.TestCase):
         self.assertEqual(a.json(), b.json())
         self.assertEqual(a.json()["seed"], 2045)
 
+
+    def test_random_seed_is_javascript_safe(self):
+        response = self.client.post(
+            "/api/markets/generate",
+            json={"mode": "expanded_2045", "gm_choice": "random"},
+        )
+        self.assertEqual(response.status_code, 200)
+        seed = response.json()["seed"]
+        self.assertGreaterEqual(seed, 0)
+        self.assertLessEqual(seed, 9_007_199_254_740_991)
+
     def test_get_market_regenerates_post_market(self):
         payload = {
             "mode": "expanded_2045",
