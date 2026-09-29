@@ -1,0 +1,1719 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Cyberpunk RED Night Market API",
+    "description": "HTTP API for the deterministic canon-2045 Cyberpunk RED Night Market generator.",
+    "version": "0.1.0"
+  },
+  "paths": {
+    "/api/health": {
+      "get": {
+        "tags": [
+          "system"
+        ],
+        "summary": "Health",
+        "operationId": "health_api_health_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HealthResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/meta": {
+      "get": {
+        "tags": [
+          "system"
+        ],
+        "summary": "Meta",
+        "operationId": "meta_api_meta_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MetaResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/markets/generate": {
+      "post": {
+        "tags": [
+          "markets"
+        ],
+        "summary": "Generate a deterministic Night Market",
+        "operationId": "generate_market_api_markets_generate_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MarketGenerateRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MarketResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/markets/{seed}": {
+      "get": {
+        "tags": [
+          "markets"
+        ],
+        "summary": "Regenerate a market from its seed",
+        "description": "Markets are deterministic, not persisted. This endpoint regenerates the market for the supplied seed and settings.",
+        "operationId": "regenerate_market_api_markets__seed__get",
+        "parameters": [
+          {
+            "name": "seed",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "title": "Seed"
+            }
+          },
+          {
+            "name": "mode",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "enum": [
+                "core_raw",
+                "expanded_2045"
+              ],
+              "type": "string",
+              "default": "expanded_2045",
+              "title": "Mode"
+            }
+          },
+          {
+            "name": "gm_choice",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "enum": [
+                "random",
+                "leave"
+              ],
+              "type": "string",
+              "default": "random",
+              "title": "Gm Choice"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MarketResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/items": {
+      "get": {
+        "tags": [
+          "catalogue"
+        ],
+        "summary": "Search and filter the canon-2045 catalogue",
+        "operationId": "list_items_api_items_get",
+        "parameters": [
+          {
+            "name": "q",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "minLength": 1
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Q"
+            }
+          },
+          {
+            "name": "category",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Category slug or exact category name.",
+              "title": "Category"
+            },
+            "description": "Category slug or exact category name."
+          },
+          {
+            "name": "tag",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Exact market tag code.",
+              "title": "Tag"
+            },
+            "description": "Exact market tag code."
+          },
+          {
+            "name": "manufacturer",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Manufacturer"
+            }
+          },
+          {
+            "name": "item_kind",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Item Kind"
+            }
+          },
+          {
+            "name": "min_cost_eb",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Min Cost Eb"
+            }
+          },
+          {
+            "name": "max_cost_eb",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Max Cost Eb"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "maximum": 100,
+              "minimum": 1,
+              "default": 50,
+              "title": "Limit"
+            }
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 0,
+              "default": 0,
+              "title": "Offset"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PaginatedItems"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/items/{item_id}": {
+      "get": {
+        "tags": [
+          "catalogue"
+        ],
+        "summary": "Get one complete item record",
+        "operationId": "item_detail_api_items__item_id__get",
+        "parameters": [
+          {
+            "name": "item_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "title": "Item Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ItemDetailResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/categories": {
+      "get": {
+        "tags": [
+          "catalogue"
+        ],
+        "summary": "Categories",
+        "operationId": "categories_api_categories_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/CategoryDetail"
+                  },
+                  "type": "array",
+                  "title": "Response Categories Api Categories Get"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/tags": {
+      "get": {
+        "tags": [
+          "catalogue"
+        ],
+        "summary": "Tags",
+        "operationId": "tags_api_tags_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/MarketTagDetail"
+                  },
+                  "type": "array",
+                  "title": "Response Tags Api Tags Get"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/market-categories": {
+      "get": {
+        "tags": [
+          "markets"
+        ],
+        "summary": "List the six Core RAW Night Market categories",
+        "operationId": "market_categories_api_market_categories_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/RawMarketCategory"
+                  },
+                  "type": "array",
+                  "title": "Response Market Categories Api Market Categories Get"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "AliasDetail": {
+        "properties": {
+          "alias": {
+            "type": "string",
+            "title": "Alias"
+          },
+          "alias_type": {
+            "type": "string",
+            "title": "Alias Type"
+          }
+        },
+        "type": "object",
+        "required": [
+          "alias",
+          "alias_type"
+        ],
+        "title": "AliasDetail"
+      },
+      "CategoryDetail": {
+        "properties": {
+          "category_id": {
+            "type": "integer",
+            "title": "Category Id"
+          },
+          "parent_category_id": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Parent Category Id"
+          },
+          "name": {
+            "type": "string",
+            "title": "Name"
+          },
+          "slug": {
+            "type": "string",
+            "title": "Slug"
+          },
+          "sort_order": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Sort Order"
+          },
+          "is_primary": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Is Primary"
+          },
+          "item_count": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Item Count"
+          }
+        },
+        "type": "object",
+        "required": [
+          "category_id",
+          "name",
+          "slug"
+        ],
+        "title": "CategoryDetail"
+      },
+      "CompanyDetail": {
+        "properties": {
+          "company_id": {
+            "type": "integer",
+            "title": "Company Id"
+          },
+          "name": {
+            "type": "string",
+            "title": "Name"
+          },
+          "role": {
+            "type": "string",
+            "title": "Role"
+          }
+        },
+        "type": "object",
+        "required": [
+          "company_id",
+          "name",
+          "role"
+        ],
+        "title": "CompanyDetail"
+      },
+      "EligibilityDetail": {
+        "properties": {
+          "profile_code": {
+            "type": "string",
+            "title": "Profile Code"
+          },
+          "profile_name": {
+            "type": "string",
+            "title": "Profile Name"
+          },
+          "status": {
+            "type": "string",
+            "title": "Status"
+          },
+          "reason": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Reason"
+          }
+        },
+        "type": "object",
+        "required": [
+          "profile_code",
+          "profile_name",
+          "status"
+        ],
+        "title": "EligibilityDetail"
+      },
+      "HTTPValidationError": {
+        "properties": {
+          "detail": {
+            "items": {
+              "$ref": "#/components/schemas/ValidationError"
+            },
+            "type": "array",
+            "title": "Detail"
+          }
+        },
+        "type": "object",
+        "title": "HTTPValidationError"
+      },
+      "HealthResponse": {
+        "properties": {
+          "status": {
+            "type": "string",
+            "const": "ok",
+            "title": "Status"
+          },
+          "api_version": {
+            "type": "string",
+            "title": "Api Version"
+          },
+          "generator_version": {
+            "type": "string",
+            "title": "Generator Version"
+          },
+          "database_ok": {
+            "type": "boolean",
+            "title": "Database Ok"
+          },
+          "item_count": {
+            "type": "integer",
+            "title": "Item Count"
+          }
+        },
+        "type": "object",
+        "required": [
+          "status",
+          "api_version",
+          "generator_version",
+          "database_ok",
+          "item_count"
+        ],
+        "title": "HealthResponse"
+      },
+      "ItemCategorySummary": {
+        "properties": {
+          "name": {
+            "type": "string",
+            "title": "Name"
+          },
+          "slug": {
+            "type": "string",
+            "title": "Slug"
+          },
+          "is_primary": {
+            "type": "boolean",
+            "title": "Is Primary"
+          }
+        },
+        "type": "object",
+        "required": [
+          "name",
+          "slug",
+          "is_primary"
+        ],
+        "title": "ItemCategorySummary"
+      },
+      "ItemDetailResponse": {
+        "properties": {
+          "item_id": {
+            "type": "integer",
+            "title": "Item Id"
+          },
+          "canonical_name": {
+            "type": "string",
+            "title": "Canonical Name"
+          },
+          "slug": {
+            "type": "string",
+            "title": "Slug"
+          },
+          "info": {
+            "type": "string",
+            "title": "Info"
+          },
+          "mechanics": {
+            "anyOf": [
+              {
+                "additionalProperties": true,
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Mechanics"
+          },
+          "item_kind": {
+            "type": "string",
+            "title": "Item Kind"
+          },
+          "record_status": {
+            "type": "string",
+            "title": "Record Status"
+          },
+          "needs_review": {
+            "type": "boolean",
+            "title": "Needs Review"
+          },
+          "review_note": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Review Note"
+          },
+          "canon_2045": {
+            "type": "boolean",
+            "title": "Canon 2045"
+          },
+          "prices": {
+            "items": {
+              "$ref": "#/components/schemas/ItemPriceDetail"
+            },
+            "type": "array",
+            "title": "Prices"
+          },
+          "categories": {
+            "items": {
+              "$ref": "#/components/schemas/CategoryDetail"
+            },
+            "type": "array",
+            "title": "Categories"
+          },
+          "companies": {
+            "items": {
+              "$ref": "#/components/schemas/CompanyDetail"
+            },
+            "type": "array",
+            "title": "Companies"
+          },
+          "aliases": {
+            "items": {
+              "$ref": "#/components/schemas/AliasDetail"
+            },
+            "type": "array",
+            "title": "Aliases"
+          },
+          "tags": {
+            "items": {
+              "$ref": "#/components/schemas/MarketTagDetail"
+            },
+            "type": "array",
+            "title": "Tags"
+          },
+          "sources": {
+            "items": {
+              "$ref": "#/components/schemas/SourceDetail"
+            },
+            "type": "array",
+            "title": "Sources"
+          },
+          "relationships": {
+            "items": {
+              "$ref": "#/components/schemas/RelationshipDetail"
+            },
+            "type": "array",
+            "title": "Relationships"
+          },
+          "eligibility": {
+            "items": {
+              "$ref": "#/components/schemas/EligibilityDetail"
+            },
+            "type": "array",
+            "title": "Eligibility"
+          }
+        },
+        "type": "object",
+        "required": [
+          "item_id",
+          "canonical_name",
+          "slug",
+          "info",
+          "item_kind",
+          "record_status",
+          "needs_review",
+          "canon_2045",
+          "prices",
+          "categories",
+          "companies",
+          "aliases",
+          "tags",
+          "sources",
+          "relationships",
+          "eligibility"
+        ],
+        "title": "ItemDetailResponse"
+      },
+      "ItemPriceDetail": {
+        "properties": {
+          "item_price_id": {
+            "type": "integer",
+            "title": "Item Price Id"
+          },
+          "variant_label": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Variant Label"
+          },
+          "price_kind": {
+            "type": "string",
+            "title": "Price Kind"
+          },
+          "cost_eb": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Cost Eb"
+          },
+          "price_category": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Price Category"
+          },
+          "unit": {
+            "type": "string",
+            "title": "Unit"
+          },
+          "unit_quantity": {
+            "type": "number",
+            "title": "Unit Quantity"
+          },
+          "cost_basis": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Cost Basis"
+          },
+          "source_price_text": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Source Price Text"
+          },
+          "notes": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Notes"
+          }
+        },
+        "type": "object",
+        "required": [
+          "item_price_id",
+          "price_kind",
+          "unit",
+          "unit_quantity"
+        ],
+        "title": "ItemPriceDetail"
+      },
+      "ItemPriceSummary": {
+        "properties": {
+          "cost_eb": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Cost Eb"
+          },
+          "price_category": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Price Category"
+          },
+          "source_price_text": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Source Price Text"
+          },
+          "variant_label": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Variant Label"
+          }
+        },
+        "type": "object",
+        "title": "ItemPriceSummary"
+      },
+      "ItemSummary": {
+        "properties": {
+          "item_id": {
+            "type": "integer",
+            "title": "Item Id"
+          },
+          "canonical_name": {
+            "type": "string",
+            "title": "Canonical Name"
+          },
+          "slug": {
+            "type": "string",
+            "title": "Slug"
+          },
+          "item_kind": {
+            "type": "string",
+            "title": "Item Kind"
+          },
+          "info": {
+            "type": "string",
+            "title": "Info"
+          },
+          "prices": {
+            "items": {
+              "$ref": "#/components/schemas/ItemPriceSummary"
+            },
+            "type": "array",
+            "title": "Prices"
+          },
+          "categories": {
+            "items": {
+              "$ref": "#/components/schemas/ItemCategorySummary"
+            },
+            "type": "array",
+            "title": "Categories"
+          },
+          "manufacturers": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Manufacturers"
+          }
+        },
+        "type": "object",
+        "required": [
+          "item_id",
+          "canonical_name",
+          "slug",
+          "item_kind",
+          "info",
+          "prices",
+          "categories",
+          "manufacturers"
+        ],
+        "title": "ItemSummary"
+      },
+      "MarketGenerateRequest": {
+        "properties": {
+          "mode": {
+            "type": "string",
+            "enum": [
+              "core_raw",
+              "expanded_2045"
+            ],
+            "title": "Mode",
+            "default": "expanded_2045"
+          },
+          "seed": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Seed"
+          },
+          "gm_choice": {
+            "type": "string",
+            "enum": [
+              "random",
+              "leave"
+            ],
+            "title": "Gm Choice",
+            "default": "random"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "title": "MarketGenerateRequest"
+      },
+      "MarketItem": {
+        "properties": {
+          "item_id": {
+            "type": "integer",
+            "title": "Item Id"
+          },
+          "name": {
+            "type": "string",
+            "title": "Name"
+          },
+          "slug": {
+            "type": "string",
+            "title": "Slug"
+          },
+          "info": {
+            "type": "string",
+            "title": "Info"
+          },
+          "item_kind": {
+            "type": "string",
+            "title": "Item Kind"
+          },
+          "prices": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Prices"
+          },
+          "manufacturers": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Manufacturers"
+          },
+          "primary_source": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Primary Source"
+          },
+          "primary_page": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Primary Page"
+          },
+          "tags": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Tags"
+          }
+        },
+        "type": "object",
+        "required": [
+          "item_id",
+          "name",
+          "slug",
+          "info",
+          "item_kind",
+          "prices",
+          "manufacturers",
+          "tags"
+        ],
+        "title": "MarketItem"
+      },
+      "MarketProfile": {
+        "properties": {
+          "code": {
+            "type": "string",
+            "title": "Code"
+          },
+          "name": {
+            "type": "string",
+            "title": "Name"
+          },
+          "description": {
+            "type": "string",
+            "title": "Description"
+          }
+        },
+        "type": "object",
+        "required": [
+          "code",
+          "name",
+          "description"
+        ],
+        "title": "MarketProfile"
+      },
+      "MarketResponse": {
+        "properties": {
+          "generator_version": {
+            "type": "string",
+            "title": "Generator Version"
+          },
+          "seed": {
+            "type": "integer",
+            "title": "Seed"
+          },
+          "mode": {
+            "type": "string",
+            "title": "Mode"
+          },
+          "gm_choice_behavior": {
+            "type": "string",
+            "title": "Gm Choice Behavior"
+          },
+          "category_roll_attempts": {
+            "items": {
+              "type": "integer"
+            },
+            "type": "array",
+            "title": "Category Roll Attempts"
+          },
+          "sections": {
+            "items": {
+              "$ref": "#/components/schemas/MarketSectionResponse"
+            },
+            "type": "array",
+            "title": "Sections"
+          }
+        },
+        "type": "object",
+        "required": [
+          "generator_version",
+          "seed",
+          "mode",
+          "gm_choice_behavior",
+          "category_roll_attempts",
+          "sections"
+        ],
+        "title": "MarketResponse"
+      },
+      "MarketSectionResponse": {
+        "properties": {
+          "category_roll": {
+            "type": "integer",
+            "title": "Category Roll"
+          },
+          "category_code": {
+            "type": "string",
+            "title": "Category Code"
+          },
+          "category_name": {
+            "type": "string",
+            "title": "Category Name"
+          },
+          "description": {
+            "type": "string",
+            "title": "Description"
+          },
+          "stock_count_roll": {
+            "type": "integer",
+            "title": "Stock Count Roll"
+          },
+          "stock_roll_attempts": {
+            "items": {
+              "type": "integer"
+            },
+            "type": "array",
+            "title": "Stock Roll Attempts"
+          },
+          "slots": {
+            "items": {
+              "$ref": "#/components/schemas/StockSlotResponse"
+            },
+            "type": "array",
+            "title": "Slots"
+          }
+        },
+        "type": "object",
+        "required": [
+          "category_roll",
+          "category_code",
+          "category_name",
+          "description",
+          "stock_count_roll",
+          "stock_roll_attempts",
+          "slots"
+        ],
+        "title": "MarketSectionResponse"
+      },
+      "MarketTagDetail": {
+        "properties": {
+          "tag_id": {
+            "type": "integer",
+            "title": "Tag Id"
+          },
+          "code": {
+            "type": "string",
+            "title": "Code"
+          },
+          "name": {
+            "type": "string",
+            "title": "Name"
+          },
+          "tag_group": {
+            "type": "string",
+            "title": "Tag Group"
+          },
+          "description": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Description"
+          },
+          "origin": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Origin"
+          },
+          "notes": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Notes"
+          },
+          "item_count": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Item Count"
+          }
+        },
+        "type": "object",
+        "required": [
+          "tag_id",
+          "code",
+          "name",
+          "tag_group"
+        ],
+        "title": "MarketTagDetail"
+      },
+      "MetaResponse": {
+        "properties": {
+          "api_version": {
+            "type": "string",
+            "title": "Api Version"
+          },
+          "generator_version": {
+            "type": "string",
+            "title": "Generator Version"
+          },
+          "database": {
+            "type": "string",
+            "title": "Database"
+          },
+          "item_count": {
+            "type": "integer",
+            "title": "Item Count"
+          },
+          "tag_count": {
+            "type": "integer",
+            "title": "Tag Count"
+          },
+          "category_count": {
+            "type": "integer",
+            "title": "Category Count"
+          },
+          "supported_modes": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Supported Modes"
+          },
+          "supported_gm_choice": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Supported Gm Choice"
+          },
+          "market_profiles": {
+            "items": {
+              "$ref": "#/components/schemas/MarketProfile"
+            },
+            "type": "array",
+            "title": "Market Profiles"
+          }
+        },
+        "type": "object",
+        "required": [
+          "api_version",
+          "generator_version",
+          "database",
+          "item_count",
+          "tag_count",
+          "category_count",
+          "supported_modes",
+          "supported_gm_choice",
+          "market_profiles"
+        ],
+        "title": "MetaResponse"
+      },
+      "PaginatedItems": {
+        "properties": {
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/ItemSummary"
+            },
+            "type": "array",
+            "title": "Items"
+          },
+          "total": {
+            "type": "integer",
+            "title": "Total"
+          },
+          "limit": {
+            "type": "integer",
+            "title": "Limit"
+          },
+          "offset": {
+            "type": "integer",
+            "title": "Offset"
+          }
+        },
+        "type": "object",
+        "required": [
+          "items",
+          "total",
+          "limit",
+          "offset"
+        ],
+        "title": "PaginatedItems"
+      },
+      "RawMarketCategory": {
+        "properties": {
+          "category_code": {
+            "type": "string",
+            "title": "Category Code"
+          },
+          "d6_roll": {
+            "type": "integer",
+            "title": "D6 Roll"
+          },
+          "name": {
+            "type": "string",
+            "title": "Name"
+          },
+          "description": {
+            "type": "string",
+            "title": "Description"
+          },
+          "source_code": {
+            "type": "string",
+            "title": "Source Code"
+          },
+          "printed_page": {
+            "type": "integer",
+            "title": "Printed Page"
+          }
+        },
+        "type": "object",
+        "required": [
+          "category_code",
+          "d6_roll",
+          "name",
+          "description",
+          "source_code",
+          "printed_page"
+        ],
+        "title": "RawMarketCategory"
+      },
+      "RelationshipDetail": {
+        "properties": {
+          "relation_type": {
+            "type": "string",
+            "title": "Relation Type"
+          },
+          "target_item_id": {
+            "type": "integer",
+            "title": "Target Item Id"
+          },
+          "target_name": {
+            "type": "string",
+            "title": "Target Name"
+          },
+          "target_slug": {
+            "type": "string",
+            "title": "Target Slug"
+          },
+          "notes": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Notes"
+          }
+        },
+        "type": "object",
+        "required": [
+          "relation_type",
+          "target_item_id",
+          "target_name",
+          "target_slug"
+        ],
+        "title": "RelationshipDetail"
+      },
+      "SourceDetail": {
+        "properties": {
+          "source_id": {
+            "type": "integer",
+            "title": "Source Id"
+          },
+          "code": {
+            "type": "string",
+            "title": "Code"
+          },
+          "title": {
+            "type": "string",
+            "title": "Title"
+          },
+          "version": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Version"
+          },
+          "publication_date": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Publication Date"
+          },
+          "source_role": {
+            "type": "string",
+            "title": "Source Role"
+          },
+          "source_name": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Source Name"
+          },
+          "printed_page": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Printed Page"
+          },
+          "pdf_page": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Pdf Page"
+          },
+          "section": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Section"
+          },
+          "notes": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Notes"
+          }
+        },
+        "type": "object",
+        "required": [
+          "source_id",
+          "code",
+          "title",
+          "source_role"
+        ],
+        "title": "SourceDetail"
+      },
+      "StockSlotResponse": {
+        "properties": {
+          "stock_roll_id": {
+            "type": "integer",
+            "title": "Stock Roll Id"
+          },
+          "category_code": {
+            "type": "string",
+            "title": "Category Code"
+          },
+          "category_name": {
+            "type": "string",
+            "title": "Category Name"
+          },
+          "d100_roll": {
+            "type": "integer",
+            "title": "D100 Roll"
+          },
+          "d100_min": {
+            "type": "integer",
+            "title": "D100 Min"
+          },
+          "d100_max": {
+            "type": "integer",
+            "title": "D100 Max"
+          },
+          "raw_result": {
+            "type": "string",
+            "title": "Raw Result"
+          },
+          "raw_cost": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Raw Cost"
+          },
+          "resolution_mode": {
+            "type": "string",
+            "title": "Resolution Mode"
+          },
+          "selector": {
+            "additionalProperties": true,
+            "type": "object",
+            "title": "Selector"
+          },
+          "selected_item": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/MarketItem"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "supplemental_items": {
+            "items": {
+              "$ref": "#/components/schemas/MarketItem"
+            },
+            "type": "array",
+            "title": "Supplemental Items"
+          },
+          "supplemental_reason": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Supplemental Reason"
+          }
+        },
+        "type": "object",
+        "required": [
+          "stock_roll_id",
+          "category_code",
+          "category_name",
+          "d100_roll",
+          "d100_min",
+          "d100_max",
+          "raw_result",
+          "resolution_mode",
+          "selector"
+        ],
+        "title": "StockSlotResponse"
+      },
+      "ValidationError": {
+        "properties": {
+          "loc": {
+            "items": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "integer"
+                }
+              ]
+            },
+            "type": "array",
+            "title": "Location"
+          },
+          "msg": {
+            "type": "string",
+            "title": "Message"
+          },
+          "type": {
+            "type": "string",
+            "title": "Error Type"
+          },
+          "input": {
+            "title": "Input"
+          },
+          "ctx": {
+            "type": "object",
+            "title": "Context"
+          }
+        },
+        "type": "object",
+        "required": [
+          "loc",
+          "msg",
+          "type"
+        ],
+        "title": "ValidationError"
+      }
+    }
+  }
+}

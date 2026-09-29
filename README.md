@@ -120,3 +120,116 @@ The RAW mode preserves the Night Market table exactly rather than silently
 The generator engine is intentionally independent of any web framework. A
 future FastAPI/GUI layer can import `NightMarketGenerator` directly without
 duplicating generation rules.
+
+## FastAPI backend
+
+The project now includes an HTTP API designed to be the backend for the future
+web GUI.
+
+Install the API dependencies:
+
+```bash
+python -m pip install -r requirements.txt
+```
+
+Start the development server from the project root:
+
+```bash
+python -m uvicorn api.app:app --reload
+```
+
+Then open:
+
+- API documentation: `http://127.0.0.1:8000/docs`
+- OpenAPI document: `http://127.0.0.1:8000/openapi.json`
+- Health check: `http://127.0.0.1:8000/api/health`
+
+### Main API contract
+
+Generate a market:
+
+```http
+POST /api/markets/generate
+Content-Type: application/json
+```
+
+```json
+{
+  "mode": "expanded_2045",
+  "seed": 2045,
+  "gm_choice": "random"
+}
+```
+
+`seed` may be omitted. The generated seed is returned in the response.
+
+Regenerate an existing deterministic market:
+
+```http
+GET /api/markets/2045?mode=expanded_2045&gm_choice=random
+```
+
+Catalogue endpoints:
+
+```text
+GET /api/items
+GET /api/items/{item_id}
+GET /api/categories
+GET /api/tags
+GET /api/market-categories
+GET /api/meta
+GET /api/health
+```
+
+`GET /api/items` currently supports these filters:
+
+```text
+q
+category
+tag
+manufacturer
+item_kind
+min_cost_eb
+max_cost_eb
+limit
+offset
+```
+
+Examples:
+
+```http
+GET /api/items?q=Militech&limit=20
+GET /api/items?tag=weapon.medium_pistol
+GET /api/items?min_cost_eb=500&max_cost_eb=1000
+```
+
+The HTTP contract intentionally supports only `gm_choice=random` and
+`gm_choice=leave`. Interactive `prompt` remains a CLI-only behavior. A future
+GUI can use `leave` and present GM-choice resolution in the browser.
+
+### CORS
+
+Development CORS is enabled for the common frontend ports:
+
+```text
+http://localhost:3000
+http://127.0.0.1:3000
+http://localhost:5173
+http://127.0.0.1:5173
+```
+
+Override this with the comma-separated `NIGHTMARKET_CORS_ORIGINS`
+environment variable.
+
+You can also point the API at another compatible database with
+`NIGHTMARKET_DB`. See `.env.example`.
+
+### API tests
+
+Install development dependencies and run the whole test suite:
+
+```bash
+python -m pip install -r requirements-dev.txt
+python -m unittest discover -s tests -v
+```
+
