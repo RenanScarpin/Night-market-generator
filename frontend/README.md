@@ -2,7 +2,9 @@
 
 React + TypeScript + Vite frontend for the Cyberpunk RED Night Market generator.
 
-## What this milestone includes
+## Current milestone
+
+The GUI now includes the first session-utility layer around generated markets:
 
 - Core RAW vs Expanded 2045 mode selection.
 - Optional deterministic seed.
@@ -12,6 +14,23 @@ React + TypeScript + Vite frontend for the Cyberpunk RED Night Market generator.
 - Required foundational cyberware displayed as supplemental availability.
 - Expandable item mechanics loaded on demand from `GET /api/items/{id}`.
 - Responsive layout suitable for desktop, tablet, and mobile browsers.
+- Client-side `/market` route using the browser History API.
+- Deterministic market URLs, for example:
+
+  ```text
+  /market?seed=2045&mode=expanded_2045&gmChoice=random
+  ```
+
+- Opening a deterministic URL automatically regenerates the market from FastAPI.
+- Browser back/forward navigation between generated markets.
+- Recent Markets stored locally in the browser (up to 12 unique seed/mode/settings combinations).
+- Reopen and remove recent markets; clear local market history.
+- `Regenerate`, `New random`, and `Copy link` actions.
+- Last-used generation mode and GM-choice behavior persisted in `localStorage`.
+
+Browser-specific routing, storage, and clipboard code lives under
+`src/platform/browser/` so those concerns can later be replaced with mobile
+navigation/storage implementations for React Native / Expo.
 
 ## Development
 
@@ -29,7 +48,7 @@ npm install
 npm run dev
 ```
 
-Open `http://127.0.0.1:5173`.
+Open `http://127.0.0.1:5173`. The root path automatically redirects to `/market`.
 
 Vite proxies `/api` to `http://127.0.0.1:8000`, so no extra CORS setup is needed for this development flow.
 
@@ -48,3 +67,16 @@ npm run build
 ```
 
 The static build is written to `frontend/dist/`.
+
+Because the GUI now uses client-side routes such as `/market`, a production
+static host must fall back unknown application paths to `index.html`.
+
+## Local browser data
+
+The GUI currently stores only convenience data in the browser:
+
+- the last-used generator settings;
+- up to 12 recent deterministic market references.
+
+The generated inventory itself is not persisted. Reopening a recent entry asks
+the backend to regenerate it from the saved seed/settings.

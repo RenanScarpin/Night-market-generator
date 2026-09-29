@@ -267,3 +267,21 @@ Open `http://127.0.0.1:5173`.
 The Vite development server proxies `/api` to FastAPI on port 8000. If the API is hosted somewhere else, copy `frontend/.env.example` to `frontend/.env` and set `VITE_API_BASE_URL`.
 
 The frontend is deliberately split into API, types, components, pages, and utility layers so these pieces can later be extracted into shared packages for a React Native / Expo mobile client.
+
+### Session-friendly market URLs and local history
+
+The web GUI now treats generated markets as deterministic routes. A market can
+be shared or reopened with a URL such as:
+
+```text
+http://127.0.0.1:5173/market?seed=2045&mode=expanded_2045&gmChoice=random
+```
+
+The browser client automatically regenerates that market through FastAPI. It
+also keeps up to 12 recent markets in local browser storage, persists the
+last-used mode / GM-choice settings, supports browser back/forward navigation,
+and adds Regenerate, New Random, and Copy Link controls.
+
+Browser-only routing, storage, and clipboard behavior is isolated under
+`frontend/src/platform/browser/` so the generator/API-facing logic stays easy
+to reuse later in a React Native / Expo client.

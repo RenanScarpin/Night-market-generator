@@ -1,7 +1,9 @@
 import type {
   ApiErrorBody,
+  GmChoiceBehavior,
   ItemDetail,
   MarketGenerateRequest,
+  MarketMode,
   NightMarket,
 } from '../types/api'
 
@@ -44,6 +46,18 @@ export function generateMarket(payload: MarketGenerateRequest): Promise<NightMar
     method: 'POST',
     body: JSON.stringify(payload),
   })
+}
+
+export function getMarket(
+  seed: number,
+  mode: MarketMode,
+  gmChoice: GmChoiceBehavior,
+): Promise<NightMarket> {
+  const params = new URLSearchParams({
+    mode,
+    gm_choice: gmChoice,
+  })
+  return request<NightMarket>(`/api/markets/${seed}?${params.toString()}`)
 }
 
 export function getItemDetail(itemId: number): Promise<ItemDetail> {
