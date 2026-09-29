@@ -17,6 +17,7 @@ from .schemas import (
     MarketGenerateRequest,
     MarketResponse,
     MarketTagDetail,
+    ManufacturerSummary,
     MetaResponse,
     PaginatedItems,
     RawMarketCategory,
@@ -237,6 +238,16 @@ def create_app(db_path: str | Path | None = None) -> FastAPI:
     def tags() -> list[dict]:
         with open_repo() as repo:
             return repo.list_market_tags()
+
+    @app.get(
+        "/api/manufacturers",
+        response_model=list[ManufacturerSummary],
+        tags=["catalogue"],
+        summary="List manufacturers represented in the canon-2045 catalogue",
+    )
+    def manufacturers() -> list[dict]:
+        with open_repo() as repo:
+            return repo.list_manufacturers()
 
     @app.get(
         "/api/market-categories",

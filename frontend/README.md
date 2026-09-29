@@ -4,7 +4,7 @@ React + TypeScript + Vite frontend for the Cyberpunk RED Night Market generator.
 
 ## Current milestone
 
-The GUI now includes the first session-utility layer around generated markets:
+The GUI now includes both the session-ready generator and the first complete Catalogue browser:
 
 - Core RAW vs Expanded 2045 mode selection.
 - Optional deterministic seed.
@@ -27,6 +27,13 @@ The GUI now includes the first session-utility layer around generated markets:
 - Reopen and remove recent markets; clear local market history.
 - `Regenerate`, `New random`, and `Copy link` actions.
 - Last-used generation mode and GM-choice behavior persisted in `localStorage`.
+
+- A `/catalogue` route for browsing the complete 1,150-item canon-2045 database.
+- Catalogue search by canonical name or known alias.
+- Filters for source/index category, market semantic tag, explicit manufacturer, and eurobuck price range.
+- Filter state encoded in the URL so searches can be bookmarked or shared.
+- Responsive 24-item result pages with expandable mechanics/source/relationship details.
+- Manufacturer filter options loaded from `GET /api/manufacturers`.
 
 Browser-specific routing, storage, and clipboard code lives under
 `src/platform/browser/` so those concerns can later be replaced with mobile

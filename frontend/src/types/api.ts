@@ -153,3 +153,41 @@ export interface ItemDetail {
 export interface ApiErrorBody {
   detail?: string | Array<Record<string, unknown>>
 }
+
+export interface ItemPriceSummary {
+  cost_eb: number | null
+  price_category: string | null
+  source_price_text: string | null
+  variant_label: string | null
+}
+
+export interface ItemCategorySummary {
+  name: string
+  slug: string
+  is_primary: boolean
+}
+
+export interface ItemSummary {
+  item_id: number
+  canonical_name: string
+  slug: string
+  item_kind: string
+  info: string
+  prices: ItemPriceSummary[]
+  categories: ItemCategorySummary[]
+  manufacturers: string[]
+}
+
+export interface PaginatedItems {
+  items: ItemSummary[]
+  total: number
+  limit: number
+  offset: number
+}
+
+export interface ManufacturerSummary {
+  company_id: number
+  name: string
+  item_count: number
+}
+

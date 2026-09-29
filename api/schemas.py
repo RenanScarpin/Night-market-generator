@@ -123,6 +123,12 @@ class CompanyDetail(BaseModel):
     role: str
 
 
+class ManufacturerSummary(BaseModel):
+    company_id: int
+    name: str
+    item_count: int
+
+
 class AliasDetail(BaseModel):
     alias: str
     alias_type: str

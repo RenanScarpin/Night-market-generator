@@ -179,6 +179,14 @@ class ApiTests(unittest.TestCase):
         codes = {row["code"] for row in data}
         self.assertIn("market.expanded_2045", codes)
 
+    def test_manufacturers(self):
+        response = self.client.get("/api/manufacturers")
+        self.assertEqual(response.status_code, 200)
+        data = response.json()
+        self.assertGreater(len(data), 0)
+        self.assertTrue(all(row["item_count"] > 0 for row in data))
+        self.assertTrue(any(row["name"] == "Militech" for row in data))
+
     def test_raw_market_categories(self):
         response = self.client.get("/api/market-categories")
         self.assertEqual(response.status_code, 200)
@@ -199,6 +207,7 @@ class ApiTests(unittest.TestCase):
             "/api/items/{item_id}",
             "/api/categories",
             "/api/tags",
+            "/api/manufacturers",
             "/api/market-categories",
         ]:
             self.assertIn(path, paths)

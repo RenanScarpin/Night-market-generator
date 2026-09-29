@@ -176,6 +176,7 @@ GET /api/items
 GET /api/items/{item_id}
 GET /api/categories
 GET /api/tags
+GET /api/manufacturers
 GET /api/market-categories
 GET /api/meta
 GET /api/health
@@ -285,3 +286,21 @@ and adds Regenerate, New Random, and Copy Link controls.
 Browser-only routing, storage, and clipboard behavior is isolated under
 `frontend/src/platform/browser/` so the generator/API-facing logic stays easy
 to reuse later in a React Native / Expo client.
+### Catalogue web page
+
+The React client now includes `/catalogue`, a searchable browser for the full
+1,150-item canon-2045 database. It supports name/alias search, category and
+market-tag filters, explicit manufacturer filtering, min/max eurobuck price,
+URL-backed filter state, pagination, and expandable full item mechanics.
+
+Examples of bookmarkable catalogue URLs:
+
+```text
+/catalogue?q=Militech
+/catalogue?tag=weapon.medium_pistol
+/catalogue?manufacturer=Militech&minCost=500&maxCost=1000
+```
+
+The manufacturer select is backed by `GET /api/manufacturers`; category and
+tag options come from the existing catalogue metadata endpoints.
+

@@ -1,4 +1,5 @@
 import { useEffect } from 'react'
+import { CataloguePage } from './pages/CataloguePage'
 import { GeneratorPage } from './pages/GeneratorPage'
 import { NotFoundPage } from './pages/NotFoundPage'
 import { BrowserLink, navigate, useBrowserLocation } from './platform/browser/router'
@@ -12,6 +13,15 @@ export default function App() {
       navigate(`/market${location.search}`, { replace: true })
     }
   }, [location.pathname, location.search])
+
+  let page
+  if (pathname === '/market') {
+    page = <GeneratorPage locationSearch={location.search} />
+  } else if (pathname === '/catalogue') {
+    page = <CataloguePage locationSearch={location.search} />
+  } else {
+    page = <NotFoundPage />
+  }
 
   return (
     <div className="app-frame">
@@ -30,15 +40,16 @@ export default function App() {
           >
             Generator
           </BrowserLink>
-          <span className="nav-coming" title="Coming in the next milestone">Catalogue</span>
+          <BrowserLink
+            className={pathname === '/catalogue' ? 'nav-link nav-active' : 'nav-link'}
+            to="/catalogue"
+          >
+            Catalogue
+          </BrowserLink>
         </nav>
       </header>
 
-      {pathname === '/market' ? (
-        <GeneratorPage locationSearch={location.search} />
-      ) : (
-        <NotFoundPage />
-      )}
+      {page}
 
       <footer className="site-footer">
         <span>Cyberpunk RED Night Market tooling</span>

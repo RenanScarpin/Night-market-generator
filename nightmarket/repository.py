@@ -541,6 +541,21 @@ class MarketRepository:
             )
         ]
 
+    def list_manufacturers(self) -> list[dict[str, Any]]:
+        return [
+            dict(r)
+            for r in self.con.execute(
+                """
+                SELECT c.company_id,c.name,COUNT(DISTINCT ic.item_id) AS item_count
+                FROM companies c
+                JOIN item_companies ic USING(company_id)
+                WHERE ic.role='manufacturer'
+                GROUP BY c.company_id,c.name
+                ORDER BY c.name COLLATE NOCASE
+                """
+            )
+        ]
+
     def get_meta(self) -> dict[str, Any]:
         return {
             "item_count": self.con.execute(

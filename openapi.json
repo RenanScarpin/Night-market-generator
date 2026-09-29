@@ -104,6 +104,8 @@
             "required": true,
             "schema": {
               "type": "integer",
+              "maximum": 9007199254740991,
+              "minimum": 0,
               "title": "Seed"
             }
           },
@@ -420,6 +422,31 @@
                   },
                   "type": "array",
                   "title": "Response Tags Api Tags Get"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/manufacturers": {
+      "get": {
+        "tags": [
+          "catalogue"
+        ],
+        "summary": "List manufacturers represented in the canon-2045 catalogue",
+        "operationId": "manufacturers_api_manufacturers_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/ManufacturerSummary"
+                  },
+                  "type": "array",
+                  "title": "Response Manufacturers Api Manufacturers Get"
                 }
               }
             }
@@ -1003,6 +1030,29 @@
         ],
         "title": "ItemSummary"
       },
+      "ManufacturerSummary": {
+        "properties": {
+          "company_id": {
+            "type": "integer",
+            "title": "Company Id"
+          },
+          "name": {
+            "type": "string",
+            "title": "Name"
+          },
+          "item_count": {
+            "type": "integer",
+            "title": "Item Count"
+          }
+        },
+        "type": "object",
+        "required": [
+          "company_id",
+          "name",
+          "item_count"
+        ],
+        "title": "ManufacturerSummary"
+      },
       "MarketGenerateRequest": {
         "properties": {
           "mode": {
@@ -1017,7 +1067,9 @@
           "seed": {
             "anyOf": [
               {
-                "type": "integer"
+                "type": "integer",
+                "maximum": 9007199254740991.0,
+                "minimum": 0.0
               },
               {
                 "type": "null"
