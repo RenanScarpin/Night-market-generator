@@ -1,0 +1,157 @@
+{
+  "generator_version": "0.1.0",
+  "seed": 2045,
+  "mode": "expanded_2045",
+  "gm_choice_behavior": "random",
+  "category_roll_attempts": [
+    2,
+    4
+  ],
+  "sections": [
+    {
+      "category_roll": 2,
+      "category_code": "personal_electronics",
+      "category_name": "Personal Electronics",
+      "description": "Gizmos and gadgets galore. You can even find Black ICE if you hit the shadier stalls.",
+      "stock_count_roll": 1,
+      "stock_roll_attempts": [
+        73
+      ],
+      "slots": [
+        {
+          "stock_roll_id": 35,
+          "category_code": "personal_electronics",
+          "category_name": "Personal Electronics",
+          "d100_roll": 73,
+          "d100_min": 71,
+          "d100_max": 75,
+          "raw_result": "Smart Glasses",
+          "raw_cost": "500eb (Expensive)",
+          "resolution_mode": "exact_item",
+          "selector": {
+            "canonical_names": [
+              "Smart Glasses"
+            ],
+            "type": "exact_item"
+          },
+          "selected_item": {
+            "item_id": 729,
+            "name": "Smart Glasses",
+            "slug": "smart-glasses",
+            "info": "Contains two option slots for Cybereye options. When worn, Smart Glasses give the user access to the benefits of these options. When cybereye options are installed into the",
+            "item_kind": "cyberware",
+            "prices": [
+              "500eb (Expensive)"
+            ],
+            "manufacturers": [],
+            "primary_source": "CP:R",
+            "primary_page": 354,
+            "tags": [
+              "core_raw.candidate",
+              "core_raw.section.cyberware",
+              "core_raw.section.personal_electronics",
+              "cyberware",
+              "cyberware.alternative",
+              "market.expanded_2045"
+            ]
+          },
+          "supplemental_items": [],
+          "supplemental_reason": null
+        }
+      ]
+    },
+    {
+      "category_roll": 4,
+      "category_code": "cyberware",
+      "category_name": "Cyberware",
+      "description": "The best cybertech on Street; probably not stolen or harvested.",
+      "stock_count_roll": 2,
+      "stock_roll_attempts": [
+        39,
+        17
+      ],
+      "slots": [
+        {
+          "stock_roll_id": 68,
+          "category_code": "cyberware",
+          "category_name": "Cyberware",
+          "d100_roll": 39,
+          "d100_min": 36,
+          "d100_max": 40,
+          "raw_result": "Internal Cyberware of exactly 1,000eb",
+          "raw_cost": null,
+          "resolution_mode": "query",
+          "selector": {
+            "all_tags": [
+              "cyberware.internal_body"
+            ],
+            "exact_cost_eb": 1000,
+            "type": "query"
+          },
+          "selected_item": {
+            "item_id": 677,
+            "name": "Int Hydraulics Upgrade",
+            "slug": "int-hydraulics-upgrade",
+            "info": "▶Internal Hydraulics Upgrade Cost: 1,000eb (Very Expensive) Humanity Loss: 3 (1d6)•Install: Hospital When your body is built on a hydraulic frame, improve ments can always be made to ensure efficiency – sold separately, of course. Internal Body Cyberware. User’s REF, DEX, and MOVE STATS are all set at 4 unless they would otherwise be higher for the Character. These STATS can still be lowered by Armor Penalties, Critical Injury effects, etc.",
+            "item_kind": "cyberware",
+            "prices": [
+              "1,000eb (V Expensive)"
+            ],
+            "manufacturers": [],
+            "primary_source": "IR3",
+            "primary_page": 107,
+            "tags": [
+              "core_raw.candidate",
+              "core_raw.section.cyberware",
+              "cyberware",
+              "cyberware.internal_body",
+              "market.expanded_2045"
+            ]
+          },
+          "supplemental_items": [],
+          "supplemental_reason": null
+        },
+        {
+          "stock_roll_id": 64,
+          "category_code": "cyberware",
+          "category_name": "Cyberware",
+          "d100_roll": 17,
+          "d100_min": 16,
+          "d100_max": 20,
+          "raw_result": "Cyberarm",
+          "raw_cost": "500eb (Expensive)",
+          "resolution_mode": "exact_item",
+          "selector": {
+            "canonical_names": [
+              "Cyberarm"
+            ],
+            "type": "exact_item"
+          },
+          "selected_item": {
+            "item_id": 531,
+            "name": "Cyberarm",
+            "slug": "cyberarm",
+            "info": "A Cyberarm has 4 Option Slots for Cyberarm or Cyberlimb Options, and each comes pre-installed with a Standard Hand that doesn't cost any Humanity Loss or take up a Cyberarm Option Slot.",
+            "item_kind": "cyberware",
+            "prices": [
+              "500eb (Expensive)"
+            ],
+            "manufacturers": [],
+            "primary_source": "CP:R",
+            "primary_page": 364,
+            "tags": [
+              "core_raw.candidate",
+              "core_raw.section.cyberware",
+              "cyberware",
+              "cyberware.cyberlimb",
+              "cyberware.foundation.cyberarm",
+              "market.expanded_2045"
+            ]
+          },
+          "supplemental_items": [],
+          "supplemental_reason": null
+        }
+      ]
+    }
+  ]
+}

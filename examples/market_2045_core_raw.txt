@@ -1,0 +1,17 @@
+CYBERPUNK RED — NIGHT MARKET
+Mode: core_raw
+Seed: 2045
+Generator: 0.1.0
+
+PERSONAL ELECTRONICS
+--------------------
+Category roll: 2 | Stock types: 1
+  73 [71-75]: Smart Glasses — 500eb (Expensive)
+
+CYBERWARE
+---------
+Category roll: 4 | Stock types: 4
+  13 [11-15]: Neural Link — 500eb (Expensive)
+  39 [36-40]: Internal Cyberware of exactly 1,000eb
+  51 [51-55]: Cybereye Option of 500eb or less
+  17 [16-20]: Cyberarm — 500eb (Expensive)

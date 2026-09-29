@@ -1,0 +1,24 @@
+# Cyberpunk RED — Night Market
+
+- **Mode:** `expanded_2045`
+- **Seed:** `2045`
+- **Generator:** `0.1.0`
+
+## Personal Electronics
+
+Category roll **2**; **1** item types.
+
+- **73 (71–75): Smart Glasses** — 500eb (Expensive)
+  - RAW slot: Smart Glasses
+  - Contains two option slots for Cybereye options. When worn, Smart Glasses give the user access to the benefits of these options. When cybereye options are installed into the
+
+## Cyberware
+
+Category roll **4**; **2** item types.
+
+- **39 (36–40): Int Hydraulics Upgrade** — 1,000eb (V Expensive)
+  - RAW slot: Internal Cyberware of exactly 1,000eb
+  - ▶Internal Hydraulics Upgrade Cost: 1,000eb (Very Expensive) Humanity Loss: 3 (1d6)•Install: Hospital When your body is built on a hydraulic frame, improve ments can always be made to ensure efficiency – sold separately, of course. Internal Body Cyberware. User’s REF, DEX, and MOVE STATS are all set at 4 unless they would otherwise be higher for the Character. These STATS can still be lowered by Armor Penalties, Critical Injury effects, etc.
+- **17 (16–20): Cyberarm** — 500eb (Expensive)
+  - RAW slot: Cyberarm
+  - A Cyberarm has 4 Option Slots for Cyberarm or Cyberlimb Options, and each comes pre-installed with a Standard Hand that doesn't cost any Humanity Loss or take up a Cyberarm Option Slot.
